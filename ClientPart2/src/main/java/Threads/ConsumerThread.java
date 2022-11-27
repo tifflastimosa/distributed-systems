@@ -50,7 +50,7 @@ public class ConsumerThread extends Thread {
     this.countDownLatch = countDownLatch;
 //    apiClient.setBasePath("http://localhost:8080/ServerAPI/");
 //    apiClient.setBasePath("http://localhost:8080");
-    apiClient.setBasePath("http://servlet-load-balancer-d76b44bd4bcf6144.elb.us-west-2.amazonaws.com:8080/ServerAPI_war/");
+    apiClient.setBasePath("http://34.215.245.211:8080/ServerAPI_war/");
     this.count = 0;
     this.numUnSuccessfulRequests = 0;
     this.threadTime = threadTime;

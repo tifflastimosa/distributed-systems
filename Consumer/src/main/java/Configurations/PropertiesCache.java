@@ -12,7 +12,7 @@ public class PropertiesCache {
   private PropertiesCache() {
     //Private constructor to restrict new instances
     InputStream in = this.getClass().getClassLoader().getResourceAsStream("application.properties");
-    System.out.println("Reading all properties from the file");
+//    System.out.println("Reading all properties from the file");
     try {
       properties.load(in);
     } catch (IOException e) {

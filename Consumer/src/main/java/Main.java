@@ -10,14 +10,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import org.json.JSONObject;
-
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class Main {
 
   public static void main(String[] args) throws IOException, TimeoutException {
 
     // the number of threads on the consumer
-    final int NUM_THREADS = 200;
+    final int NUM_THREADS = 1200;
+    System.out.println("Running Consumer.jar..." + " Num Threads: " + String.valueOf(NUM_THREADS));
 
     // name of the message queue
     final String QUEUE_NAME = "post_requests";
@@ -34,31 +36,26 @@ public class Main {
     String password = PropertiesCache.getInstance().getProperty("redis-password");
     Integer port = Integer.valueOf(PropertiesCache.getInstance().getProperty("redis-port"));
 
-
-
-
-    // concurrent hashmap - shared resource
-    // TODO: Remove this from the consumer program because will be using an in memory database
-    ConcurrentHashMap<Integer, ArrayList<JSONObject>> skiersStorage = new ConcurrentHashMap<>();
-
     // creating a thread pool of consumer threads
     ExecutorService threadPool = Executors.newFixedThreadPool(NUM_THREADS);
 
+//    JedisPool jedisPool = new JedisPool(hostname, port);
+
     // creating each consumer thread
-    // TODO: Remove skiersStorage
     for (int i = 0; i < NUM_THREADS; i++) {
-      threadPool.execute(new ConsumerThread(connection, skiersStorage, QUEUE_NAME));
+      threadPool.execute(new ConsumerThread(connection, hostname, port, QUEUE_NAME));
     }
-    try {
-      if (!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
-        threadPool.shutdownNow();
-        if (!threadPool.awaitTermination(60, TimeUnit.SECONDS))
-          System.err.println("Pool did not terminate");
-      }
-    } catch (InterruptedException ie) {
-      threadPool.shutdownNow();
-      Thread.currentThread().interrupt();
-    }
+//    try {
+//      if (!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
+//        threadPool.shutdownNow();
+//        if (!threadPool.awaitTermination(60, TimeUnit.SECONDS))
+//          System.err.println("Pool did not terminate");
+//      }
+//    } catch (InterruptedException ie) {
+//      threadPool.shutdownNow();
+//      Thread.currentThread().interrupt();
+//    }
+//    jedisPool.close();
   }
 
 }

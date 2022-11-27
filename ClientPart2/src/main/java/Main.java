@@ -47,9 +47,9 @@ public class Main {
   public static void main(String[] args) throws InterruptedException {
 
     // Schedule 1 - 32 initial threads
-    final int NUMTHREADS1 = 32;
+    final int NUMTHREADS1 = 100;
     // schedule 2 - 168 initial threads
-    final int NUMTHREADS2 = 300;
+    final int NUMTHREADS2 = 100;
     // number of requests
     final int REQ_REQUESTS = 1000;
 
@@ -135,13 +135,13 @@ public class Main {
       time.add(responsePOJO.getLatencyCalculation());
     }
 
-    String[] headers = {"Start Time", "End Time", "Latency", "Type", "Code"};
-    try (CSVWriter writer = new CSVWriter(new FileWriter("/Users/tiffany/GitHub/cs6650-distributed-systems/Assignments/lastimosa-assignment1/ClientPart2/records.csv"))) {
-      writer.writeNext(headers);
-      writer.writeAll(forCSV);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+//    String[] headers = {"Start Time", "End Time", "Latency", "Type", "Code"};
+//    try (CSVWriter writer = new CSVWriter(new FileWriter("/Users/tiffany/GitHub/cs6650-distributed-systems/Assignments/lastimosa-assignment1/ClientPart2/records.csv"))) {
+//      writer.writeNext(headers);
+//      writer.writeAll(forCSV);
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
 
     Collections.sort(time);
     int totalRequests = totalCount.get() + totalUnsuccessfulRequests.get();
