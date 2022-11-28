@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="ServerAPI:war2">
+    <output-path>$PROJECT_DIR$/out/artifacts/ServerAPI_war2</output-path>
+    <root id="archive" name="ServerAPI_war.war">
+      <element id="artifact" artifact-name="ServerAPI:war exploded" />
+    </root>
+  </artifact>
+</component>

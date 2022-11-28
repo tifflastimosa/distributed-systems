@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import org.json.JSONObject;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
 public class ConsumerThread extends Thread {
 
@@ -17,7 +16,7 @@ public class ConsumerThread extends Thread {
 
   private final String QUEUE_NAME;
 
-  private JedisPool jedisPool;
+  // Jedis is not thread safe, thus create Jedis connection in each Consumer thread
   private Jedis jedis;
 
   private String key;
@@ -30,8 +29,6 @@ public class ConsumerThread extends Thread {
     } catch (Exception e) {
       e.printStackTrace();
     }
-//    this.channel = connection.createChannel();
-//    this.jedisPool = jedisPool;
     try {
       this.jedis = new Jedis(host, port);
     } catch (Exception exception) {
@@ -53,7 +50,6 @@ public class ConsumerThread extends Thread {
         // convert the String to JSON object
         JSONObject jsonObject = new JSONObject(message);
         // the case if the concurrent hashmap does not contain the skier
-
         Integer vertical = (Integer) jsonObject.get("liftID") * 10;
 
         String skierIDKey = "skierId:" + jsonObject.get("skierId");
@@ -65,11 +61,10 @@ public class ConsumerThread extends Thread {
         String verticalKey = "vertical" + String.valueOf(vertical);
         String UUIDKey = "UUID:" + UUID.randomUUID();
 
-        this.key = skierIDKey + "-" + resortIDKey + "-" + seasonIDKey + "-" + dayIDKey + "-" + timeIDKey + "-" + liftIDKey + verticalKey + "-" + UUIDKey;
+        this.key = skierIDKey + "-" + resortIDKey + "-" + seasonIDKey + "-" + dayIDKey + "-" + timeIDKey + "-" + liftIDKey + "-" + verticalKey + "-" + UUIDKey;
         if (key != null) {
-          this.jedis.sadd(this.key, "");
+          this.jedis.sadd(this.key, verticalKey);
         }
-        this.key = "";
         channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
       }
     };
@@ -79,11 +74,6 @@ public class ConsumerThread extends Thread {
     } catch (IOException e) {
       e.printStackTrace();
     }
-//    } finally {
-//      if (this.jedis != null) {
-//        this.jedisPool.returnResource(jedis);
-//      }
-//    }
   }
 
 }

@@ -39,23 +39,11 @@ public class Main {
     // creating a thread pool of consumer threads
     ExecutorService threadPool = Executors.newFixedThreadPool(NUM_THREADS);
 
-//    JedisPool jedisPool = new JedisPool(hostname, port);
-
     // creating each consumer thread
     for (int i = 0; i < NUM_THREADS; i++) {
       threadPool.execute(new ConsumerThread(connection, hostname, port, QUEUE_NAME));
     }
-//    try {
-//      if (!threadPool.awaitTermination(60, TimeUnit.SECONDS)) {
-//        threadPool.shutdownNow();
-//        if (!threadPool.awaitTermination(60, TimeUnit.SECONDS))
-//          System.err.println("Pool did not terminate");
-//      }
-//    } catch (InterruptedException ie) {
-//      threadPool.shutdownNow();
-//      Thread.currentThread().interrupt();
-//    }
-//    jedisPool.close();
+
   }
 
 }
