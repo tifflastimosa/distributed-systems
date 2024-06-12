@@ -107,4 +107,4 @@ For the schema, I chose to go with option d) Schema 4 because it would be easier
  If you would like to view the Google Sheet of the topologies and instance types, please see the following Google Sheet link: [results](https://docs.google.com/spreadsheets/d/1MslOg1dNi8RPU39Hcz62SBnPO4CXvKimWL9NAlCqbRg/edit?usp=sharing). When reviewing the report, please refer to the color legend for additional information regarding the topologies and instance types.
 
 ## Design Diagrams
-![](https://github.com/tifflastimosa/distributed-systems/blob/main/A3%20Final%20Screenshots/Step-1.jpeg?raw=true)
+![](https://github.com/tifflastimosa/distributed-systems/blob/main/Screenshots/Step-1.jpeg)
