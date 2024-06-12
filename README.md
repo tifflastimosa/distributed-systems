@@ -1,4 +1,4 @@
-# Ski Resort Distributed System
+# Scalable Distributed System
 
 ## Goal
 - The goal of this project is to create a microservice that will have high throughput, availability, and scalability.
